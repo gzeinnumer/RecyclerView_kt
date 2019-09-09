@@ -11,20 +11,28 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
 
+    var rv:RecyclerView? =null
+    val users: ArrayList<User>? =  null
+
     @SuppressLint("WrongConstant")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val rv = findViewById(R.id.rv) as RecyclerView
+        rv = findViewById(R.id.rv) as RecyclerView
 
-        rv.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
+        rv!!.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
 
-        val users = ArrayList<User>()
+        //cara 1
+//        if (users != null) {
+//            users.add(User("GZeinNumer","Balaibaru"))
+//        }
 
-        users.add(User("GZeinNumer","Balaibaru"))
+        //cara 2
+        users?.add(User("GZeinNumer","Balaibaru"))
 
-        val adapter = CostumAdapter(users)
+        val adapter = CostumAdapter(this,users!!)
 
+        rv!!.adapter = adapter
     }
 }
