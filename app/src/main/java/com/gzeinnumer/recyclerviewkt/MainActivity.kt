@@ -3,36 +3,46 @@ package com.gzeinnumer.recyclerviewkt
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
+    private val TAG = "MainActivity"
 
-    var rv:RecyclerView? =null
-    val users: ArrayList<User>? =  null
+    lateinit var list: ArrayList<String>
 
     @SuppressLint("WrongConstant")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+//        type1()
+        type2()
+    }
 
-        rv = findViewById(R.id.rv) as RecyclerView
+    private fun type1() {
+        list.add("GZeinNumer")
 
-        rv!!.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
+        val adapter = CostumAdapter(list){
+            Log.d(TAG, "onCreate: $it")
+        }
 
-        //cara 1
-//        if (users != null) {
-//            users.add(User("GZeinNumer","Balaibaru"))
-//        }
+        rv.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
+        rv.adapter = adapter
+    }
 
-        //cara 2
-        users?.add(User("GZeinNumer","Balaibaru"))
+    private fun type2() {
+        list.add("GZeinNumer")
 
-        val adapter = CostumAdapter(this,users!!)
+        val adapter = CostumAdapter2(list, object: CostumAdapter2.OnCallBack{
+            override fun onClick(data: String) {
+                Log.d(TAG, "onClick: $data")
+            }
+        })
 
-        rv!!.adapter = adapter
+        rv.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
+        rv.adapter = adapter
     }
 }

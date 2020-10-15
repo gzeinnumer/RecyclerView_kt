@@ -5,12 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 
-class CostumAdapter(
-    private val list: ArrayList<String>,
-    private val listener: (String) -> Unit
-) : RecyclerView.Adapter<CostumAdapter.MyHolder>() {
+class CostumAdapter2(
+    private val userList: ArrayList<String>,
+    private val listener: OnCallBack
+) : RecyclerView.Adapter<CostumAdapter2.MyHolder>() {
+
+    interface OnCallBack {
+        fun onClick(data: String)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item, parent, false)
@@ -18,11 +23,15 @@ class CostumAdapter(
     }
 
     override fun getItemCount(): Int {
-        return list.size
+        return userList.size
     }
 
     override fun onBindViewHolder(holder: MyHolder, position: Int) {
-        holder.textName.text = list[position]
+        holder.textName.text = userList[position]
+
+        holder.itemView.setOnClickListener {
+            listener.onClick(userList[position])
+        }
     }
 
     class MyHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
